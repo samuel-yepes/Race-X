@@ -13,7 +13,7 @@ const Game: React.FC<GameProps> = ({ level, endGame }) => {
     const [obstaculos, setObstaculos] = useState<{ carrilObstaculo: number; y: number }[]>([]);
     const [gameOver, setGameOver] = useState<boolean>(false);
 
-    function cantidadCarriles (level: Level): number{
+    function cantidadCarriles(level: Level): number {
         return level.id == 1 ? 4 : 3;
     }
 
@@ -35,7 +35,7 @@ const Game: React.FC<GameProps> = ({ level, endGame }) => {
     useEffect(() => {
         const gameLoop = setInterval(() => {
             setObstaculos((prev) => {
-                const nuevoObstaculo = prev.map((obstacle) => ({...obstacle, y: obstacle.y + level.velocidad,}));
+                const nuevoObstaculo = prev.map((obstacle) => ({ ...obstacle, y: obstacle.y + level.velocidad, }));
 
                 if (nuevoObstaculo.some((o) => o.carrilObstaculo === PosicionJugador && o.y >= 90)) {
                     setGameOver(true);
@@ -43,16 +43,33 @@ const Game: React.FC<GameProps> = ({ level, endGame }) => {
                     endGame("¡Perdiste! Chocaste con un auto.");
                 }
 
-                return nuevoObstaculo.filter((o) => o.y <100);
+                return nuevoObstaculo.filter((o) => o.y < 100);
             });
 
             if (Math.random() < 0.3) {
-                setObstaculos((prev) => [...prev,{ carrilObstaculo: Math.floor(Math.random() * lineasCarriles), y: 0 },]);
+                setObstaculos((prev) => [...prev, { carrilObstaculo: Math.floor(Math.random() * lineasCarriles), y: 0 },]);
             }
         }, 300);
 
         return () => clearInterval(gameLoop);
     }, [level, PosicionJugador, endGame]);
+    
+    useEffect(() => {
+        const teclado = (e: KeyboardEvent) => {
+            if (e.key === "ArrowLeft") {
+                moveLeft();
+            } else if (e.key === "ArrowRight") {
+                moveRight();
+            }
+        };
+
+        window.addEventListener("keydown", teclado);
+
+        return () => {
+            window.removeEventListener("keydown", teclado);
+        };
+    }, []);
+
 
     const moveLeft = () => {
         setPosicionJugador((prev) => Math.max(0, prev - 1));
@@ -65,26 +82,26 @@ const Game: React.FC<GameProps> = ({ level, endGame }) => {
     return (
         <div className="game-container">
             <h1>Tiempo: {TiempoRestante}</h1>
-            <div className="road" style={{ gridTemplateColumns: `repeat(${lineasCarriles}, 4fr)` }}>
+            <div className="road" style={{ gridTemplateColumns: `repeat(${lineasCarriles}, 8fr)` }}>
                 {Array.from({ length: lineasCarriles }).map((_, i) => (
                     <div key={i} className="lane" />
                 ))}
                 {obstaculos.map((obstacle, index) => (
                     <div
                         key={index}
-                        className="obstacle"
-                        style={{left: `${(100 / lineasCarriles) * obstacle.carrilObstaculo}%`,top: `${obstacle.y}%`,}}
+                        className="obstaculo"
+                        style={{ left: `${(100 / lineasCarriles) * obstacle.carrilObstaculo}%`, top: `${obstacle.y}%`, }}
                     />
                 ))}
 
-                <div
-                    className="player-car"
+                <div className="carro-jugador"
                     style={{ left: `${(100 / lineasCarriles) * PosicionJugador}%` }}
-                />
+                ></div>
+
             </div>
-            <div className="controls">
-                <button onClick={moveLeft}>👈🏻</button>
-                <button onClick={moveRight}>👉🏻</button>
+            <div className="controles">
+                <p>Muevase con las telcas de izquierda y derecha del teclado</p>
+                <p>👈🏻👉🏻</p>
             </div>
         </div>
     );

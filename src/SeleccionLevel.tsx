@@ -25,6 +25,7 @@ const LevelSelection: React.FC<LevelSelectionProps> = ({ startGame }) => {
                         margin: "10px",
                         padding: "10px",
                         fontSize: "20px",
+                        borderRadius: "5px"
                     }}
                 >
                     {nivel.id}
@@ -38,7 +39,8 @@ const LevelSelection: React.FC<LevelSelectionProps> = ({ startGame }) => {
                     marginTop: "20px",
                     padding: "10px 20px",
                     fontSize: "20px",
-                    backgroundColor:'#d3ed7c'
+                    backgroundColor:'#d3ed7c',
+                    borderRadius: "5px",
                 }}
             >
                 Jugar

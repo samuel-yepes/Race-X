@@ -23,20 +23,50 @@
   border-left: none;
 }
 
-.player-car {
+.carro-jugador {
+  background-image: url('img/moto-jugador.png');
+  background-repeat: repeat;
+  background-size: cover;
   position: absolute;
   bottom: 10px;
-  width: calc(100% / 4 - 10px);
+  width: 100px;
   height: 80px;
-  background: red;
-  border-radius: 5px;
-  transition: left 0.2s ease-in-out;
 }
 
-.obstacle {
+.obstaculo {
+  background-image: url('img/carro.png');
+  background-repeat: no-repeat;
+  background-size: cover;
   position: absolute;
-  width: calc(100% / 4 - 10px);
-  height: 80px;
-  background: blue;
-  border-radius: 5px;
+  width: 60px;
+  height: 100px;
+}
+
+body{
+  background: radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(112,34,50,1) 94%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh; /* alto completo de la pantalla */
+  padding: 20px;
+}
+
+.card-inicio {
+  max-width: 600px;
+  margin: 50px auto;
+  padding: 30px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.15); 
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37); 
+  backdrop-filter: blur(10px); 
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.18); 
+  text-align: center;
+  color: white; 
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.controles, p{
+  font-size: 18px;
+  font-weight: 600;
 }
